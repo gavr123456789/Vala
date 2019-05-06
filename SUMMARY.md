@@ -67,7 +67,7 @@
 * [Использование библиотек](biblioteki/ispolzovanie-bibliotek.md)
 * [Создание библиотеки](biblioteki/sozdanie-biblioteki.md)
 * [Генерирование VAPI файла из предыдущего с помощью vapigen.](biblioteki/generirovanie-vapi-faila-iz-predydushego-s-pomoshyu-vapigen..md)
-* [Инструменты](biblioteki/instrumenty.md)
+* [Инструменты](biblioteki/tools.md)
 
 ## Технические приемы
 
