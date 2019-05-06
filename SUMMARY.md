@@ -7,70 +7,70 @@
 
 ## Элементы языка
 
-* [Методы](elementy-yazyka/metody.md)
-* [Делегаты](elementy-yazyka/delegaty.md)
-* [Анонимные методы / Замыкания](elementy-yazyka/anonimnye-metody-zamykaniya.md)
-* [Пространства имён](elementy-yazyka/prostranstva-imyon.md)
-* [Структуры](elementy-yazyka/struktury.md)
-* [Классы](elementy-yazyka/klassy.md)
+* [Методы](language-elements/metody.md)
+* [Делегаты](language-elements/delegaty.md)
+* [Анонимные методы / Замыкания](language-elements/anonimnye-metody-zamykaniya.md)
+* [Пространства имён](language-elements/prostranstva-imyon.md)
+* [Структуры](language-elements/struktury.md)
+* [Классы](language-elements/klassy.md)
 
 ## Объектно-ориентированное программирование
 
-* [Основы](sas/osnovy.md)
-* [Конструктор](sas/konstruktor.md)
-* [Деструктор](sas/destruktor.md)
-* [Сигналы](sas/signaly.md)
-* [Свойства\(Properties\)](sas/svoistva-properties.md)
-* [Наследование](sas/nasledovanie.md)
-* [Абстрактные классы](sas/abstraktnye-klassy.md)
-* [Интерфейсы / Миксины](sas/interfeisy-miksiny.md)
-* [Полиморфизм](sas/polimorfizm.md)
-* [Сокрытие методов](sas/sokrytie-metodov.md)
-* [Информация о типах времени выполнения\(Run-Time Type Information\)](sas/informaciya-o-tipakh-vremeni-vypolneniya-run-time-type-information.md)
-* [Динамическое приведение типов\(Dynamic Type Casting\)](sas/dinamicheskoe-privedenie-tipov-dynamic-type-casting.md)
-* [Универсальные шаблоны\(Generics\)](sas/universalnye-shablony-generics.md)
-* [Создание объектов в стиле GObject](sas/sozdanie-obektov-v-stile-gobject.md)
-* [Интеграция с D-Bus](sas/integraciya-s-d-bus.md)
-* [Профили\(Другие бэкенды помимо GLib\)](sas/profili-drugie-bekendy-pomimo-glib.md)
+* [Основы](oop/osnovy.md)
+* [Конструктор](oop/konstruktor.md)
+* [Деструктор](oop/destruktor.md)
+* [Сигналы](oop/signaly.md)
+* [Свойства\(Properties\)](oop/svoistva-properties.md)
+* [Наследование](oop/nasledovanie.md)
+* [Абстрактные классы](oop/abstraktnye-klassy.md)
+* [Интерфейсы / Миксины](oop/interfeisy-miksiny.md)
+* [Полиморфизм](oop/polimorfizm.md)
+* [Сокрытие методов](oop/sokrytie-metodov.md)
+* [Информация о типах времени выполнения\(Run-Time Type Information\)](oop/informaciya-o-tipakh-vremeni-vypolneniya-run-time-type-information.md)
+* [Динамическое приведение типов\(Dynamic Type Casting\)](oop/dinamicheskoe-privedenie-tipov-dynamic-type-casting.md)
+* [Универсальные шаблоны\(Generics\)](oop/universalnye-shablony-generics.md)
+* [Создание объектов в стиле GObject](oop/sozdanie-obektov-v-stile-gobject.md)
+* [Интеграция с D-Bus](oop/integraciya-s-d-bus.md)
+* [Профили\(Другие бэкенды помимо GLib\)](oop/profili-drugie-bekendy-pomimo-glib.md)
 
 ## Продвинутые возможности
 
-* [Ассерты и контрактное программирование](prodvinutye-vozmozhnosti/asserty-i-kontraktnoe-programmirovanie.md)
-* [Обработка ошибок](prodvinutye-vozmozhnosti/obrabotka-oshibok.md)
-* [Управление параметрами](prodvinutye-vozmozhnosti/upravlenie-parametrami.md)
-* [Методы с поддержкой синтаксиса](prodvinutye-vozmozhnosti/metody-s-podderzhkoi-sintaksisa.md)
-* [Многопоточность](prodvinutye-vozmozhnosti/mnogopotochnost.md)
-* [Главный цикл\(The Main Loop\)](prodvinutye-vozmozhnosti/glavnyi-cikl-the-main-loop.md)
-* [Асинхронные методы\(Coroutine\)](prodvinutye-vozmozhnosti/asinkhronnye-metody-coroutine.md)
-* [Слабые ссылки\(Weak References\)](prodvinutye-vozmozhnosti/slabye-ssylki-weak-references.md)
-* [Список аргументов переменной длины](prodvinutye-vozmozhnosti/spisok-argumentov-peremennoi-dliny.md)
-* [Указатели](prodvinutye-vozmozhnosti/ukazateli.md)
-* [Классы не наследующие Object](prodvinutye-vozmozhnosti/klassy-ne-nasleduyushie-object.md)
+* [Ассерты и контрактное программирование](advanced-features/asserty-i-kontraktnoe-programmirovanie.md)
+* [Обработка ошибок](advanced-features/obrabotka-oshibok.md)
+* [Управление параметрами](advanced-features/upravlenie-parametrami.md)
+* [Методы с поддержкой синтаксиса](advanced-features/metody-s-podderzhkoi-sintaksisa.md)
+* [Многопоточность](advanced-features/mnogopotochnost.md)
+* [Главный цикл\(The Main Loop\)](advanced-features/glavnyi-cikl-the-main-loop.md)
+* [Асинхронные методы\(Coroutine\)](advanced-features/asinkhronnye-metody-coroutine.md)
+* [Слабые ссылки\(Weak References\)](advanced-features/slabye-ssylki-weak-references.md)
+* [Список аргументов переменной длины](advanced-features/spisok-argumentov-peremennoi-dliny.md)
+* [Указатели](advanced-features/ukazateli.md)
+* [Классы не наследующие Object](advanced-features/klassy-ne-nasleduyushie-object.md)
 
 ## Коллекции
 
-* [Введение](kollekcii/vvedenie.md)
-* [ArrayList&lt;G&gt;](kollekcii/arraylist-less-than-g-greater-than.md)
-* [HashMap&lt;K,V&gt;](kollekcii/hashmap-less-than-k-v-greater-than.md)
-* [HashSet&lt;G&gt;](kollekcii/hashset-less-than-g-greater-than.md)
+* [Введение](collections/vvedenie.md)
+* [ArrayList&lt;G&gt;](collections/arraylist-less-than-g-greater-than.md)
+* [HashMap&lt;K,V&gt;](collections/hashmap-less-than-k-v-greater-than.md)
+* [HashSet&lt;G&gt;](collections/hashset-less-than-g-greater-than.md)
 
 ## Экспериментальные возможности
 
-* [Введение](eksperimentalnye-vozmozhnosti/vvedenie.md)
-* [Цепочки связанных выражений](eksperimentalnye-vozmozhnosti/cepochki-svyazannykh-vyrazhenii.md)
-* [Литералы регулярных выражений\(regexp\)](eksperimentalnye-vozmozhnosti/literaly-regulyarnykh-vyrazhenii-regexp.md)
-* [Строгий не null режим\(Rust mode\)](eksperimentalnye-vozmozhnosti/strogii-ne-null-rezhim-rust-mode.md)
+* [Введение](experimental-features/vvedenie.md)
+* [Цепочки связанных выражений](experimental-features/cepochki-svyazannykh-vyrazhenii.md)
+* [Литералы регулярных выражений\(regexp\)](experimental-features/literaly-regulyarnykh-vyrazhenii-regexp.md)
+* [Строгий не null режим\(Rust mode\)](experimental-features/strogii-ne-null-rezhim-rust-mode.md)
 
 ## Библиотеки
 
-* [Введение](biblioteki/vvedenie.md)
-* [Использование библиотек](biblioteki/ispolzovanie-bibliotek.md)
-* [Создание библиотеки](biblioteki/sozdanie-biblioteki.md)
-* [Генерирование VAPI файла из предыдущего с помощью vapigen.](biblioteki/generirovanie-vapi-faila-iz-predydushego-s-pomoshyu-vapigen..md)
-* [Инструменты](biblioteki/tools.md)
+* [Введение](libraries/vvedenie.md)
+* [Использование библиотек](libraries/ispolzovanie-bibliotek.md)
+* [Создание библиотеки](libraries/sozdanie-biblioteki.md)
+* [Генерирование VAPI файла из предыдущего с помощью vapigen.](libraries/generirovanie-vapi-faila-iz-predydushego-s-pomoshyu-vapigen..md)
+* [Инструменты](libraries/tools.md)
 
 ## Технические приемы
 
-* [Отладка](tekhnicheskie-priemy/otladka.md)
-* [Использование GLib](tekhnicheskie-priemy/ispolzovanie-glib.md)
+* [Отладка](techniques/otladka.md)
+* [Использование GLib](techniques/ispolzovanie-glib.md)
 
