@@ -51,7 +51,7 @@
 
 * [Введение](collections/vvedenie.md)
 * [ArrayList&lt;G&gt;](collections/arraylist-less-than-g-greater-than.md)
-* [HashMap&lt;K,V&gt;](collections/hashmap-less-than-k-v-greater-than.md)
+* [HashMap&lt;K,V&gt;](collection/hashmap-less-than-k-v-greater-than.md)
 * [HashSet&lt;G&gt;](collections/hashset-less-than-g-greater-than.md)
 
 ## Экспериментальные возможности
