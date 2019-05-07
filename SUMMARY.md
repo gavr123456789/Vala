@@ -49,21 +49,21 @@
 
 ## Коллекции
 
-* [Введение](collections/vvedenie.md)
+* [Введение](collections/intro.md)
 * [ArrayList&lt;G&gt;](collections/arraylist-less-than-g-greater-than.md)
 * [HashMap&lt;K,V&gt;](collections/hashmap-less-than-k-v-greater-than.md)
 * [HashSet&lt;G&gt;](collections/hashset-less-than-g-greater-than.md)
 
 ## Экспериментальные возможности
 
-* [Введение](experimental-features/vvedenie.md)
+* [Введение](experimental-features/intro.md)
 * [Цепочки связанных выражений](experimental-features/cepochki-svyazannykh-vyrazhenii.md)
 * [Литералы регулярных выражений\(regexp\)](experimental-features/literaly-regulyarnykh-vyrazhenii-regexp.md)
 * [Строгий не null режим\(Rust mode\)](experimental-features/strogii-ne-null-rezhim-rust-mode.md)
 
 ## Библиотеки
 
-* [Введение](libraries/vvedenie.md)
+* [Введение](libraries/intro.md)
 * [Использование библиотек](libraries/ispolzovanie-bibliotek.md)
 * [Создание библиотеки](libraries/sozdanie-biblioteki.md)
 * [Генерирование VAPI файла из предыдущего с помощью vapigen.](libraries/generirovanie-vapi-faila-iz-predydushego-s-pomoshyu-vapigen..md)
