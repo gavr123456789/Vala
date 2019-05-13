@@ -30,7 +30,7 @@ Vala — это новый язык программирования, котор
 
 Производительность программ, написанных на Vala, будет сопоставима с производительностью программ, написанных непосредственно на C. И в то же время, они более просты в написании и сопровождении.
 
-![](.gitbook/assets/image%20%285%29.png)
+![](.gitbook/assets/image%20%287%29.png)
 
 Тесты были взяты с [benchmarkgames](https://benchmarksgame-team.pages.debian.net/benchmarksgame/) и переписаны на Vala\([репа](https://github.com/arrufat/vala-benchmarks)\)
 

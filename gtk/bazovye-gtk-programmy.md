@@ -43,7 +43,7 @@ $ valac --pkg gtk+-3.0 gtk-hello.vala
 $ ./gtk-hello
 ```
 
-![](../../.gitbook/assets/image%20%282%29.png)
+![](../.gitbook/assets/image%20%282%29.png)
 
 ### Настройка иконки приложения <a id="Setting_an_Application_Icon"></a>
 
@@ -107,7 +107,7 @@ public class SyncSample : Window {
 }
 ```
 
-![](../../.gitbook/assets/gtk.gif)
+![](../.gitbook/assets/gtk.gif)
 
 ### Панель инструментов, скроллинг текста и выбор файла <a id="Toolbar.2C_Scrollable_Text_View_and_File_Chooser"></a>
 
@@ -183,7 +183,7 @@ public class TextFileViewer : Window {
 }
 ```
 
-![](../../.gitbook/assets/gtkfileview.gif)
+![](../.gitbook/assets/gtkfileview.gif)
 
 Если вы хотите добавить дополнительные функции или изменить поведение диалога, вы можете _создать_ подкласс _FileChooserDialog_. Например этот запоминает последнюю папку:
 
@@ -320,5 +320,56 @@ int main (string[] args) {
 }
 ```
 
-![](../../.gitbook/assets/dialog.gif)
+![](../.gitbook/assets/dialog.gif)
+
+{% hint style="info" %}
+Своё кастомное диалоговое окно гораздо проще создать не из кода а из Glade
+{% endhint %}
+
+![](../.gitbook/assets/image%20%284%29.png)
+
+### Загрузка пользовательского интерфейса из файла XML <a id="Loading_User_Interface_from_XML_File"></a>
+
+Вместо ручного кодирования пользовательского интерфейса вашего приложения вы можете создать его с помощью удобного конструктора пользовательского интерфейса, такого как [Glade,](http://glade.gnome.org/) и сохранить его в виде файла XML. Ваше приложение может загрузить пользовательский интерфейс из этого файла во время выполнения с помощью класса _Gtk.Builder_ . Он может даже подключить все сигналы к их методам, если вы объявили их в Glade. Вот пример файла пользовательского интерфейса: [sample.ui](https://wiki.gnome.org/Projects/Vala/GTKSample?action=AttachFile&do=view&target=sample.ui)
+
+Этот пример кода работает с файлом UI, связанным выше:
+
+```csharp
+using Gtk;
+
+public void on_button1_clicked (Button source) {
+    source.label = "Thank you!";
+}
+
+public void on_button2_clicked (Button source) {
+    source.label = "Thanks!";
+}
+
+int main (string[] args) {
+    Gtk.init (ref args);
+
+    try {
+        // Если UI содержит кастомные виджеты,они должны хотя бы один раз проинициализированы
+        // Type type = typeof(Foo.BarEntry);
+        // assert(type != 0);
+        var builder = new Builder ();
+        builder.add_from_file ("sample.ui");
+        builder.connect_signals (null);
+        var window = builder.get_object ("window") as Window;
+        window.show_all ();
+        Gtk.main ();
+    } catch (Error e) {
+        stderr.printf ("Не получилось загрузить UI: %s\n", e.message);
+        return 1;
+    }
+
+    return 0;
+}
+```
+
+![](../.gitbook/assets/image%20%283%29.png)
+
+## Подключение сигналов
+
+...
 
