@@ -1,6 +1,6 @@
 # HashMap&lt;K,V&gt;
 
-![](../.gitbook/assets/image.png)
+![](../.gitbook/assets/image%20%281%29.png)
 
 Реализация: Iterable&lt;Entry&lt;K,V&gt;&gt;, Map&lt;K,V&gt;
 

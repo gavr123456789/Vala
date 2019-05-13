@@ -60,6 +60,8 @@
   * [Использование GLib](techniques/using-glib.md)
   * [Отладка](techniques/debug.md)
 * [Примеры](primery/README.md)
+  * [GTK](primery/gtk/README.md)
+    * [Базовые GTK программы](primery/gtk/bazovye-gtk-programmy.md)
   * [Базовые примеры](primery/bazovye-primery.md)
 * [UPDATE.MD](update.md.md)
 
