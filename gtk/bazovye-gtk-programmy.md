@@ -43,7 +43,7 @@ $ valac --pkg gtk+-3.0 gtk-hello.vala
 $ ./gtk-hello
 ```
 
-![](../.gitbook/assets/image%20%282%29.png)
+![](../.gitbook/assets/image%20%283%29.png)
 
 ### Настройка иконки приложения <a id="Setting_an_Application_Icon"></a>
 
@@ -326,7 +326,7 @@ int main (string[] args) {
 Своё кастомное диалоговое окно гораздо проще создать не из кода а из Glade
 {% endhint %}
 
-![](../.gitbook/assets/image%20%284%29.png)
+![](../.gitbook/assets/image%20%285%29.png)
 
 ### Загрузка пользовательского интерфейса из файла XML <a id="Loading_User_Interface_from_XML_File"></a>
 
@@ -367,7 +367,7 @@ int main (string[] args) {
 }
 ```
 
-![](../.gitbook/assets/image%20%283%29.png)
+![](../.gitbook/assets/image%20%284%29.png)
 
 ## Подключение сигналов
 

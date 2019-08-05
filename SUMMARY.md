@@ -62,6 +62,7 @@
 * [Примеры](primery/README.md)
   * [Базовые примеры](primery/bazovye-primery.md)
 * [GTK](gtk/README.md)
+  * [Flappy Bird\(???\)](gtk/flappy-bird.md)
   * [Базовые GTK программы](gtk/bazovye-gtk-programmy.md)
   * [DnD!](gtk/dnd.md)
 * [UPDATE.MD](update.md.md)
