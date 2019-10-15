@@ -46,9 +46,9 @@ unichar c = greeting[8]; // => 'м'
 В большинстве основных типов данных присутствуют удобные методы для преобразования в строку и наоборот, например:
 
 ```csharp
-bool b = "false".to_bool(); // => false
-int i = "-52".to_int(); // => -52
-double d = "6.67428E-11".to_double(); // => 6.67428E-11
+bool b = bool.parse("false"); // => false
+int i = int.parse("-52"); // => -52
+double d = double.parse("6.67428E-11"); // => 6.67428E-11
 string s1 = true.to_string(); // => "true"
 string s2 = 21.to_string(); // => "21"
 ```
