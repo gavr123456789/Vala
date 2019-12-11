@@ -50,7 +50,7 @@
   * [Строгий не null режим\(Rust mode\)](experimental-features/non-null-mode.md)
   * [Литералы регулярных выражений\(regexp\)](experimental-features/regexp.md)
   * [Цепочки связанных выражений](experimental-features/related-expressions.md)
-* [Библиотеки](libraries/README.md)
+* [Использование и создание Библиотек](libraries/README.md)
   * [Введение](libraries/intro.md)
   * [Инструменты](libraries/tools.md)
   * [Генерирование VAPI файла из предыдущего с помощью vapigen.](libraries/vapi.md)
@@ -70,4 +70,5 @@
 ## GLib
 
 * [Array](glib/array.md)
+* [Gee - Библиотека коллекций](gee-biblioteka-kollekcii.md)
 
