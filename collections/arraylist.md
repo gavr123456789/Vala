@@ -1,6 +1,6 @@
 # ArrayList&lt;G&gt;
 
-![](../.gitbook/assets/image%20%287%29.png)
+![](../.gitbook/assets/image%20%2810%29.png)
 
 Реализация массива изменяемого размера  c интерфейсом [List](https://valadoc.org/gee-0.8/Gee.List.html) .
 

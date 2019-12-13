@@ -57,6 +57,7 @@
   * [Использование библиотек](libraries/using-libraries.md)
   * [Создание библиотеки](libraries/create-lib.md)
 * [Технические приёмы](techniques/README.md)
+  * [Unit тестирование](techniques/unit-testirovanie.md)
   * [Использование GLib](techniques/using-glib.md)
   * [Отладка](techniques/debug.md)
 * [Примеры](primery/README.md)
