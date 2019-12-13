@@ -71,5 +71,4 @@
 ## GLib
 
 * [Array](glib/array.md)
-* [Gee - Библиотека коллекций](gee-biblioteka-kollekcii.md)
 
