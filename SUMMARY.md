@@ -28,7 +28,7 @@
   * [Создание объектов в стиле GObject](oop/style-of-gobject.md)
   * [Интеграция с D-Bus](oop/d-bus.md)
   * [Профили\(Другие бэкенды помимо GLib\)](oop/profiles.md)
-* [Продвинутые возможности\(Фичи\)](advanced-features/README.md)
+* [Продвинутые возможности](advanced-features/README.md)
   * [Ассерты и контрактное программирование](advanced-features/contract-programming.md)
   * [Обработка ошибок](advanced-features/error-handling.md)
   * [Управление параметрами](advanced-features/manage-params.md)
@@ -71,4 +71,8 @@
 ## GLib
 
 * [Array](glib/array.md)
+
+## Functional Programming
+
+* [Gpseq](functional-programming/gpseq.md)
 
