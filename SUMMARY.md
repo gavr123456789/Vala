@@ -75,4 +75,5 @@
 ## Functional Programming
 
 * [Gpseq](functional-programming/gpseq.md)
+* [Compose](functional-programming/compose.md)
 
