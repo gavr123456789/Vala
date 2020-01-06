@@ -146,7 +146,7 @@ assert( !result );
 
 Получает значение `Future`
 
-Если значение не готово, получение значения будет заблокировано, пока значение не вычислено. Если будущее завершается исключением, получение значения завершается с помощью [GLib.error](https://valadoc.org/glib-2.0/GLib.error.html).
+Если значение не ещё готово, "получающая" значение сторона будет находиться в заблокированном состоянии, пока значение не будет вычислено. Если `Future` завершается исключением, получение значения вызовет [GLib.error](https://valadoc.org/glib-2.0/GLib.error.html).
 
 ```csharp
 const ulong SEC = 1000000;
@@ -172,12 +172,18 @@ int val = promise.future.value;
 
 ####  map\(\) <a id="user-content-map"></a>
 
+map - применяет функцию к каждомы елементу коллекции:
+
 ```csharp
 Future<int> future = Future.of<string>("123").map<int>(g => int.parse(g));
 assert(future.value == 123);
 ```
 
 ####  flat\_map\(\) <a id="user-content-flat_map"></a>
+
+Работает как map, но с одним отличием — можно преобразовать один элемент в ноль, один или множество других.
+
+Для того, чтобы один элемент преобразовать в ноль элементов, нужно вернуть null, либо пустой стрим. Чтобы преобразовать в один элемент, нужно вернуть Future из одного элемента, например, через Future.of\(x\). Для возвращения нескольких элементов, можно любыми способами создать Future с этими элементами.
 
 ```csharp
 Future<int> future = Future.of<string>("123")
@@ -285,7 +291,7 @@ then() with an exception
 
 #### and\_then\(\) <a id="user-content-and_then"></a>
 
-Функция `then()` отложено запускает переданную в качестве аргумента функцию \(принимающую future\) - после вычисления текущего future, результатом чего может является **значение, а** _**не исключение**_ .
+Функция `and_then()` отложено запускает переданную в качестве аргумента функцию \(принимающую future\) - после вычисления текущего future, результатом чего может является **значение, а** _**не исключение**_ .
 
 value.vala
 
@@ -318,6 +324,8 @@ output: `(none)`
 ####  zip\(\) <a id="user-content-zip"></a>
 
 zip\(\) объединяет значения двух фьючерсов в один.
+
+Простой пример: zip \[1,2,3\] \[3,2,1\] - соеденяет списки \[\(1,3\),\(2,2\),\(3,1\)\]
 
 ```csharp
 Future<string> future = Future.of<string>("100");
@@ -409,11 +417,9 @@ Seq поддерживает различные методы обработки 
 
 Промежуточные операции всегда выполняются [лениво](https://ru.wikipedia.org/wiki/%D0%9B%D0%B5%D0%BD%D0%B8%D0%B2%D1%8B%D0%B5_%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F). Это означает что вычисление seq не начнется пока не будет выполен хотя бы один терминальный оператор. 
 
-Промежуточные операции также делятся на те у которых есть состояния и те у которых [его нет](https://ru.stackoverflow.com/questions/614175/%D0%A7%D1%82%D0%BE-%D0%B7%D0%BD%D0%B0%D1%87%D0%B8%D1%82-%D0%BE%D1%82%D1%81%D1%83%D1%82%D1%81%D1%82%D0%B2%D0%B8%D0%B5-%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D1%8F)\(_stateless_ и _stateful_ \). Операции без сохранения состояния не сохраняют состояние предыдущего элемента при обработке нового элемента. Поэтому каждый элемент может обрабатываться независимо от других элементов. В операциях с отслеживанием состояния\(_stateful_\) учитываются состояния предыдущих элементов при обработке новых элементов, из-за чего обработка может быть выполнена только последовотельн\(Например числа Фибоначчи\).
+Промежуточные операции также делятся на те у которых есть состояния и те у которых их[ нет](https://ru.stackoverflow.com/questions/614175/%D0%A7%D1%82%D0%BE-%D0%B7%D0%BD%D0%B0%D1%87%D0%B8%D1%82-%D0%BE%D1%82%D1%81%D1%83%D1%82%D1%81%D1%82%D0%B2%D0%B8%D0%B5-%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D1%8F)\(_stateless_ и _stateful_ \). Операции без сохранения состояния не сохраняют состояние предыдущего элемента при обработке нового элемента. Поэтому каждый элемент может обрабатываться независимо от других элементов. В операциях с отслеживанием состояния\(_stateful_\) учитываются состояния предыдущих операций над элементами при обработке новых элементов, из-за чего обработка может быть выполнена только последовотельн\(Например вычисление чисел Фибоначчи\).
 
-Следовательно, конвейеры seq, содержащие промежуточные _stateful_ операции, могут потребовать нескольких проходов или буферизации важных промежуточных вычислений. Напротив, конвейеры seq, содержащие только stateless операции, могут обрабатываться за один проход. Промежуточные операции без сохранения состояния:
-
-Consequently, seq pipelines containing stateful intermediate operations may require multiple passes or may need to buffer significant data. On the contrary, seq pipelines containing only stateless intermediate operations \(and a terminal operation\) can be processed in a single pass.
+Следовательно, конвейеры seq, содержащие промежуточные _stateful_ операции, могут потребовать нескольких проходов или буферизации важных промежуточных вычислений. Напротив, конвейеры seq, содержащие только stateless операции, могут обрабатываться за один проход.
 
 Stateless операции:
 
@@ -425,33 +431,37 @@ Stateful операции:
 
 ####  Терминальные операции <a id="user-content-terminal-operations"></a>
 
-Терминальные операции могут изменять источник для получения результата или побочного эффекта. После выполнения терминальной операции seq последовательность закрывается и больше не может использоваться.Терминальные операции:
+![](../.gitbook/assets/image%20%2813%29.png)
+
+Терминальные операции могут изменять источник для получения результата или побочного эффекта. После выполнения терминальной операции seq последовательность закрывается и больше не может использоваться.
+
+Терминальные операции:
 
 foreach, all\_match, any\_match, collect, collect\_ordered, count, find\_any, find\_first, fold, group\_by, iterator, max, min, none\_match, partition, reduce, spliterator, etc.
 
-####  Short-circuiting <a id="user-content-short-circuiting"></a>
+####  Укороченные \(Short-circuiting\) операции <a id="user-content-short-circuiting"></a>
 
-Some operations are regarded as short-circuiting operations. A short-circuiting **intermediate** operation may produce a finite seq as a result when infinite input given. A short-circuiting **terminal** operation may terminate in finite time when infinite input given.
+Промежуточные укороченные операции могут привести к тому что seq итерирующий по бесконечному источнику\(например генератору четных чисел\) приведет к результату за конечное время .
 
-|  |  For processing a seq of infinite source to terminate normally in finite time, it is necessary that the pipeline contains a short-circuiting operation. |
-| :--- | :--- |
+{% hint style="info" %}
+Для того чтобы обработка seq бесконечного источника завершилась нормально за конечное время, необходимо, чтобы трубопровод содержал операцию короткого замыкания.
+{% endhint %}
 
-
-Short-circuiting operations:
+Short-circuiting операции:
 
 all\_match, any\_match, chop, chop\_ordered, find\_any, find\_first, limit, limit\_ordered, none\_match, etc.
 
 ####  Parallelism <a id="user-content-parallelism"></a>
 
-When the terminal operation is started, the seq pipeline is executed sequentially or in parallel depending on the mode of the seq on which it is invoked. The mode is sequential initially. It can be changed by intermediate operations `sequential()` and `parallel()`.
+При запуске терминальной операции конвейер seq выполняется последовательно или параллельно в зависимости от режима seq, в котором он вызывается. Последовательный режим является режимом по умолчанию. Он может быть изменен с помощью промежуточных операций `sequential()` или `parallel()`.
 
-All operations respect encounter order in sequential execution. In parallel execution, however, all stateful intermediate and terminal operations may not respect the encounter order, except for operations identified as explicitly ordered such as `find_first()`.
+Все операции соблюдают порядок встречи элементов seq при последовательном выполнении. Однако при параллельном выполнении все промежуточные и терминальные операции с сохранением состояния могут не учитывать реальный порядок порядок элементов\(на то они и паралельные\), за исключением операций, определенных как явно упорядоченные, таких как `find_first()`.
 
-|  |  The result future of a sequential pipeline is already completed when returned from the terminal operation method, and therefore you do not have to wait the future for getting the value. |
-| :--- | :--- |
+{% hint style="info" %}
+Возвращаемый результат любой терминальной операции уже является вычисленным, поэтому вам не нужно ждать future для получения результата
+{% endhint %}
 
-
-###  Method examples <a id="user-content-method-examples"></a>
+### Примеры методов <a id="user-content-method-examples"></a>
 
 Main method, `using Gpseq;`, and `using Gee;` omitted.
 
@@ -472,6 +482,8 @@ pig
 
 ####  filter\(\) <a id="user-content-filter"></a>
 
+Промежуточный оператор filter отбирает только те строки, длина которых не превышает 3.
+
 ```csharp
 string[] array = {"dog", "cat", "pig", "boar", "bear"};
 Seq.of_array<string>(array)
@@ -489,6 +501,8 @@ pig
 
 ####  map\(\) <a id="user-content-map"></a>
 
+Применяет функцию к каждому элементу и затем возвращает стрим, в котором элементами будут результаты функции. map можно применять для изменения типа элементов.
+
 ```csharp
 string[] array = {"dog", "cat", "pig"};
 Seq.of_array<string>(array)
@@ -505,6 +519,10 @@ PIG
 ```
 
 ####  flat\_map\(\) <a id="user-content-flat_map"></a>
+
+Работает как map, но с одним отличием — можно преобразовать один элемент в ноль, один или множество других.
+
+Для того, чтобы один элемент преобразовать в ноль элементов, нужно вернуть `null`, либо пустой стрим. Чтобы преобразовать в один элемент, нужно вернуть стрим из одного элемента, например, через Seq.of\(x\). Для возвращения нескольких элементов, можно любыми способами создать стрим с этими элементами.
 
 ```csharp
 string[] array = {"dog", "cat", "pig"};
