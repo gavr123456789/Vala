@@ -147,7 +147,7 @@ dependencies \(--dependencies, intro-dependencies.json\):
 
 * добавлена опция `version`key, содержащий требуемую версию зависимости
 
-Тесты и тесты \(--tests, --benchmarks, intro-tests.json, intro-benchmarks.json\):
+Тесты и бенчмарки \(--tests, --benchmarks, intro-tests.json, intro-benchmarks.json\):
 
 * добавлена опция `protocol`key
 
