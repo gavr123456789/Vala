@@ -81,3 +81,7 @@
 
 * [Change Log](meson-1/change-log.md)
 
+## Apps
+
+* [Games](apps/games.md)
+
