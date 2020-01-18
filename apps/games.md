@@ -1,6 +1,7 @@
 # Games
 
 *  [Games](https://wiki.gnome.org/Apps/Games) - Simple game launcher for GNOME
+* [GameHub ](https://tkashkin.tk/projects/gamehub/)- Единая библиотека для всех ваших игр \(Steam, GOG, Humble Bundle, Wine/Proton, DOSBox, RetroArch, ScummVM\)
 *  [Lights Off](https://wiki.gnome.org/Lightsoff) - Logic game
 *  [Mahjongg](https://wiki.gnome.org/Apps/Mahjongg) - Mahjongg game
 *  [Mines](https://wiki.gnome.org/Apps/Mines) - Minesweeper game
