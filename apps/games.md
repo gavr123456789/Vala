@@ -14,10 +14,7 @@
 *  [Chess](https://wiki.gnome.org/Apps/Chess) - GNOME Chess game
 * [ Pasang Emas](https://sourceforge.net/projects/pasang-emas/) - Traditional board game of Brunei
 *  [Tetravex](https://wiki.gnome.org/Apps/Tetravex) - Puzzle game
-
-
-
-
+* [openSage](https://github.com/smx-smx/openSage) - a port of [OpenSAGE](https://github.com/OpenSAGE/OpenSAGE) from C\# to Vala. OpenSAGE is a free, open source re-implementation of SAGE, the 3D real time strategy \(RTS\) engine used in Command & Conquer
 
 ### Dead
 
