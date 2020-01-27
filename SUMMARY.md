@@ -85,3 +85,7 @@
 
 * [Games](apps/games.md)
 
+## Examples
+
+* [Basic](examples/basic.md)
+
