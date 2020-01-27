@@ -54,7 +54,7 @@ Process.spawn_command_line_sync ("ls", ref output); // now output is result of l
 
 ```csharp
 Timer timer = new Timer ();
-stdout.printf (@"$(timer.elapsed())");
+stdout.printf (@"$(timer.elapsed()) sec elapsed");// 0 sec elapsed
 ```
 
 ### Signals with data \(Qt like\)
@@ -78,13 +78,13 @@ void main() {
 
 ```csharp
 string email = "tux@kernel.org";
-if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.match(email)) {
+if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.match(email))
     stdout.printf("Valid email address\n");
 
 var r = /(foo|bar|cow)/;
 var o = r.replace ("this foo is great", -1, 0, "thing");
 print (o);//this thing is great
-}
+
 ```
 
 ## Gpseq
