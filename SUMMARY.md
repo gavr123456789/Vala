@@ -77,15 +77,15 @@
 * [Gpseq](functional-programming/gpseq.md)
 * [Compose](functional-programming/compose.md)
 
-## Meson <a id="meson-1"></a>
+## Examples
 
-* [Change Log](meson-1/change-log.md)
+* [Basic](examples/basic.md)
 
 ## Apps
 
 * [Games](apps/games.md)
 
-## Examples
+## Meson <a id="meson-1"></a>
 
-* [Basic](examples/basic.md)
+* [Change Log](meson-1/change-log.md)
 

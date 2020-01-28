@@ -87,6 +87,21 @@ print (o);//this thing is great
 
 ```
 
+### Class
+
+```csharp
+class Klass{
+    public int a {private set; owned get; default = 3;}
+    public int? b = 3; //? means it may be null|=3 same as default = 3
+    public string c;
+    public inline void hello() {print("Hello");}
+}
+
+void main () {
+	var klass = new Klass(){a = 5,b = 6,c = "named constructor"};
+}
+```
+
 ## Gpseq
 
 ### Parallel sorting 
