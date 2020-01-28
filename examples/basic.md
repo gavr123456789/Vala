@@ -89,6 +89,10 @@ print (o);//this thing is great
 
 ### Class
 
+Классы выделяются на куче.
+
+Memory for classes is allocated on the Heap.
+
 ```csharp
 class Klass{
     public int a {private set; owned get; default = 3;}
@@ -127,6 +131,29 @@ public class Person : Object {
 void main () {
     var klass1 = new Person("Mark");//output: Welcome Mark
     var klass2 = new Person.with_age("Mark",20);//output: Welcome Mark
+}
+```
+
+### Structs
+
+Структуры выделяются на стеке  
+Memory for structs is allocated on the Stack.
+
+```csharp
+struct Klass{
+    int a;
+    int b;
+    public Klass(){print("Constructor\n");}
+}
+struct Sas: Klass{
+    public Sas.with_args(int _a = 2, int _b = 3){a = _a; b = _b;}
+    public int sum(){return base.a + base.b;}//base here mean Klass
+}
+void main () {
+    Sas sas = {5,6};
+    var sus = Sas() {a = 5,b = 6};
+    var ses = Sas.with_args(5,6);
+    prin(sas.sum()," ",sus.sum()," ",ses.sum());
 }
 ```
 
