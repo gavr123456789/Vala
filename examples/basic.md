@@ -95,10 +95,38 @@ class Klass{
     public int? b = 3; //? means it may be null|=3 same as default = 3
     public string c;
     public inline void hello() {print("Hello");}
+    signal void sig_1(int a);// Event with data
+    public Klass(){print("usual constructor\n");}
+    public Klass.with_a(int _a){a = _a;}//named constructor
 }
 
 void main () {
-	var klass = new Klass(){a = 5,b = 6,c = "named constructor"};
+    var klass1 = new Klass(){a = 5,b = 6,c = "param named constructor"};
+    var klass2 = new Klass.with_a(5);
+}
+```
+
+GObject Constructor Class
+
+```csharp
+public class Person : Object {
+    /* Construction properties */
+    public string name { get; construct; }
+    public int age { get; construct set; }
+    public Person(string name) {
+        Object(name: name);
+    }
+    public Person.with_age(string name, int years) {
+        Object(name: name, age: years);
+    }
+    construct {
+        // do anything else
+        stdout.printf(@"Welcome $name\n");
+    }
+}
+void main () {
+    var klass1 = new Person("Mark");//output: Welcome Mark
+    var klass2 = new Person.with_age("Mark",20);//output: Welcome Mark
 }
 ```
 
