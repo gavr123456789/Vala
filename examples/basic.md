@@ -1,5 +1,9 @@
 # Basic
 
+{% hint style="info" %}
+All examples except gpseq are run and compiled with the vala filename command.vala
+{% endhint %}
+
 ## Std
 
 Std means GLib
@@ -57,6 +61,26 @@ Timer timer = new Timer ();
 stdout.printf (@"$(timer.elapsed()) sec elapsed");// 0 sec elapsed
 ```
 
+### OS Specific
+
+```csharp
+Environment.get_current_dir();
+Environment.get_real_name();
+Environment.get_system_config_dirs();
+Environment.get_user_config_dir();
+Environment.get_application_name();
+Environment.get_home_dir();
+//Windows specific
+Win32.is_nt_based();
+Win32.OSType.SERVER;//enum
+Win32.get_windows_version();
+Win32.getlocale();
+Win32.get_package_installation_directory_of_module(hmodule);//hmodule is pointer
+//Linux specific
+Linux.Network.ifMap.port;
+Linux. anything from linux.h;
+```
+
 ### Signals with data \(Qt like\)
 
 ```csharp
@@ -64,12 +88,10 @@ public class SignalTest: Object {
     public signal void sig_1(int a);
     string to_string(){ return "hello from SignalTest\n";}
 }
+//The first argument is always the object that caused the signal.
 void main() {
     var t1 = new SignalTest();
-    t1.sig_1.connect((t, a) => {
-        //The first argument is always the object that caused the signal.
-        print(@"$a $t\n");
-    });
+    t1.sig_1.connect((t, a) => { print(@"$a $t\n"); });
     t1.sig_1(5);
 }
 ```
@@ -84,21 +106,23 @@ if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.match(email))
 var r = /(foo|bar|cow)/;
 var o = r.replace ("this foo is great", -1, 0, "thing");
 print (o);//this thing is great
-
 ```
 
 ### Class
 
-Классы выделяются на куче.
-
+{% hint style="info" %}
+Классы выделяются на куче.  
 Memory for classes is allocated on the Heap.
+{% endhint %}
+
+Things u can do with classes:
 
 ```csharp
 class Klass{
-    public int a {private set; owned get; default = 3;}
+    public int a {private set; owned get; default = 3;}// property
     public int? b = 3; //? means it may be null|=3 same as default = 3
     public string c;
-    public inline void hello() {print("Hello");}
+    public inline void hello() {print("Hello");}//inline
     signal void sig_1(int a);// Event with data
     public Klass(){print("usual constructor\n");}
     public Klass.with_a(int _a){a = _a;}//named constructor
@@ -109,6 +133,20 @@ void main () {
     var klass2 = new Klass.with_a(5);
 }
 ```
+
+{% hint style="info" %}
+owned get means that the object will own the link after the transfer, that is, it is like move semantics in C++
+{% endhint %}
+
+{% hint style="info" %}
+In Vala, as in Go, there is no function overload, but you can use named constructors and default arguments
+
+В Vala как и в Go нету перегрузки функций, но можно использовать именованные конструкторы и аргументы по умолчанию
+
+On the 11th line, you can see the creation of a class with some arguments specified without a constructor. This is similar to named function arguments.
+
+На 11той строке вы можете увидеть создание класса с заданием некоторых аргументов без конструктора. Это похоже на именованные аргументы функций.
+{% endhint %}
 
 GObject Constructor Class
 
@@ -157,6 +195,8 @@ void main () {
 }
 ```
 
+## Owned 
+
 ## Gpseq
 
 ### Parallel sorting 
@@ -203,9 +243,7 @@ void main () {
 
 ### GoLang like Managed Blocked Parallelism
 
-
-
-```text
+```csharp
 const ulong SEC = 1000000;
 
 TaskEnv.apply(new CustomTaskEnv(), () => {
