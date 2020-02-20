@@ -199,7 +199,7 @@ class Klass{
 }
 
 void main () {
-    var klass1 = new Klass(){a = 5,b = 6,c = "param named constructor"};
+    var klass1 = new Klass(){a = 5, b = 6, c = "param named constructor"};
     var klass2 = new Klass.with_a(5);
 }
 ```
