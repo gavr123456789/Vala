@@ -70,16 +70,86 @@ Environment.get_system_config_dirs();
 Environment.get_user_config_dir();
 Environment.get_application_name();
 Environment.get_home_dir();
+...
 //Windows specific
 Win32.is_nt_based();
 Win32.OSType.SERVER;//enum
 Win32.get_windows_version();
 Win32.getlocale();
 Win32.get_package_installation_directory_of_module(hmodule);//hmodule is pointer
+...
 //Linux specific
 Linux.Network.ifMap.port;
 Linux. anything from linux.h;
 ```
+
+### Network
+
+Get Twitter Status
+
+#### Soup Library
+
+```csharp
+using Soup;
+void main () {
+    // add your twitter username
+    string username = "gnome";
+    // format the URL to use the username as the filename
+    string url = "http://twitter.com/users/%s.xml".printf (username);
+    // create an HTTP session to twitter
+    var session = new Soup.Session ();
+    var message = new Soup.Message ("GET", url);
+    // send the HTTP request and wait for response
+    session.send_message (message);
+    // output the XML result to stdout 
+    stdout.write (message.response_body.data);
+}// to run: vala --pkg libsoup-2.4 filename
+```
+
+[more soup examples](https://wiki.gnome.org/Projects/Vala/LibSoupSample)
+
+#### GIO \(Vala standart input output library\)
+
+Async Server Example
+
+```csharp
+bool on_incoming_connection (SocketConnection conn) {
+    stdout.printf ("Got incoming connection\n");
+    // Process the request asynchronously
+    process_request.begin (conn);// u can call .begin on async funcs
+    return true;
+}
+// Note the async keyword
+async void process_request (SocketConnection conn) {
+    try {
+        var dis = new DataInputStream (conn.input_stream);
+        var dos = new DataOutputStream (conn.output_stream);
+        string req = yield dis.read_line_async (Priority.HIGH_IDLE);
+        dos.put_string ("Got: %s\n".printf (req));
+    } catch (Error e) {
+        stderr.printf ("%s\n", e.message);
+    }
+}
+
+void main () {
+    try {
+        var srv = new SocketService ();
+        srv.add_inet_port (3333, null);
+        srv.incoming.connect (on_incoming_connection);
+        srv.start ();
+        new MainLoop ().run ();
+    } catch (Error e) {
+        stderr.printf ("%s\n", e.message);
+    }
+}
+//
+```
+
+{% hint style="info" %}
+Connect to localhost via netcat or telnet on port 3333 and issue a command ending with a newline. echo "blub" \| nc localhost 3333
+{% endhint %}
+
+[more network GIO examples](https://wiki.gnome.org/Projects/Vala/GIONetworkingSample)
 
 ### Signals with data \(Qt like\)
 
@@ -195,9 +265,124 @@ void main () {
 }
 ```
 
-## Owned 
+## DBus
 
-## Gpseq
+### Server
+
+```csharp
+[DBus (name = "org.example.Demo")]
+public class DemoServer : Object {
+    private int counter;
+    public int ping (string msg) {
+        stdout.printf ("%s\n", msg);
+        return counter++;
+    }
+    public int ping_with_signal (string msg) {
+        stdout.printf ("%s\n", msg);
+        pong(counter, msg);
+        return counter++;
+    }
+    public int ping_with_sender (string msg, GLib.BusName sender) {
+        stdout.printf ("%s, from: %s\n", msg, sender);
+        return counter++;
+    }
+    public void ping_error () throws Error {
+        throw new DemoError.SOME_ERROR ("There was an error!");
+    }
+    public signal void pong (int count, string msg);
+}
+[DBus (name = "org.example.DemoError")]
+public errordomain DemoError{
+    SOME_ERROR
+}
+
+void on_bus_aquired (DBusConnection conn) {
+    try {
+        conn.register_object ("/org/example/demo", new DemoServer ());
+    } catch (IOError e) {
+        stderr.printf ("Could not register service\n");
+    }
+}
+void main () {
+    Bus.own_name (BusType.SESSION, "org.example.Demo", BusNameOwnerFlags.NONE,
+                  on_bus_aquired,
+                  () => {},
+                  () => stderr.printf ("Could not aquire name\n"));
+    new MainLoop ().run ();
+}
+```
+
+### Client
+
+```csharp
+[DBus (name = "org.example.Demo")]
+interface Demo : Object {
+    public abstract int ping (string msg) throws IOError;
+    public abstract int ping_with_sender (string msg) throws IOError;
+    public abstract int ping_with_signal (string msg) throws IOError;
+    public signal void pong (int count, string msg);
+}
+
+void main () {
+    /* Needed only if your client is listening to signals; you can omit it otherwise */
+    var loop = new MainLoop();
+    /* Important: keep demo variable out of try/catch scope not lose signals! */
+    Demo demo = null;
+    try {
+        demo = Bus.get_proxy_sync (BusType.SESSION, "org.example.Demo",
+                                                    "/org/example/demo");
+        /* Connecting to signal pong! */
+        demo.pong.connect((c, m) => {
+            stdout.printf ("Got pong %d for msg '%s'\n", c, m);
+            loop.quit ();
+        });
+
+        int reply = demo.ping ("Hello from Vala");
+        stdout.printf ("%d\n", reply);
+
+        reply = demo.ping_with_sender ("Hello from Vala with sender");
+        stdout.printf ("%d\n", reply);
+
+        reply = demo.ping_with_signal ("Hello from Vala with signal");
+        stdout.printf ("%d\n", reply);
+
+    } catch (IOError e) {
+        stderr.printf ("%s\n", e.message);
+    }
+    loop.run();
+}
+```
+
+## HTML5 Generate
+
+[Compose](https://github.com/arteymix/compose) - Functional templating for Vala.
+
+```csharp
+using Compose;
+using Compose.HTML5;
+
+var app = new Valum.Router ();
+
+app.get ("/users", () => {
+  var users = User.all ();
+  return res.expand_utf8 (
+    html ({},
+      head ({},
+        title ("My really amazing page"),
+        link ("/static/style.css")
+      ),
+      body ({"lang=en"},
+        section ({"class=users"},
+          h2 ({}, "Users"),
+          take<User> (()     => users.next (),
+                      (user) => p (user.username)))
+      )
+    )
+  );
+});
+```
+
+## Gpseq \(C\# Linq/Java Stream API, Go lang Chanels and Parallelism\)
 
 ### Parallel sorting 
 
@@ -231,6 +416,8 @@ void main () {
 
 ### GoLang like channels
 
+#### simple example
+
 ```csharp
 using Gpseq;
 
@@ -239,6 +426,31 @@ void main () {
     run(() => { chan.send("ping").ok(); });
     print("%s\n", chan.recv().value);
 }
+```
+
+#### Complex example
+
+Sum using divide and conquer:
+
+```csharp
+using Gpseq;
+void main () {
+    int[] array = {3, 1, 4, 1, 5, 9};
+    Channel<int> chan = Channel.bounded<int>(0);
+    run(() => sum(array[0:array.length/2], chan));
+    run(() => sum(array[array.length/2:array.length], chan));
+    print_sum(chan);
+}
+void sum (int[] arr, Sender<int> ch) {
+    int sum = 0;
+    for (int i = 0; i < arr.length; ++i) sum += arr[i];
+    ch.send(sum).ok();
+}
+void print_sum (Receiver<int> ch) {
+    int left = ch.recv().value;
+    int right = ch.recv().value;
+    print("%d %d %d\n", left, right, left + right);
+}//result = 8 15 23
 ```
 
 ### GoLang like Managed Blocked Parallelism
