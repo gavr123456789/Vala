@@ -60,7 +60,6 @@
   * [Unit тестирование](techniques/unit-tests.md)
   * [Отладка](techniques/debug.md)
   * [Использование GLib](techniques/using-glib.md)
-* [UPDATE.MD](update.md.md)
 
 ## Functional Programming
 
@@ -78,6 +77,7 @@
 ## Apps
 
 * [Games](apps/games.md)
+* [UPDATE.MD](update.md.md)
 
 ## Meson <a id="meson-1"></a>
 
