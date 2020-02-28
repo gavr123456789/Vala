@@ -1,6 +1,6 @@
 # Flappy Bird\(???\)
 
-![](../.gitbook/assets/image.png)
+![](../../.gitbook/assets/image.png)
 
 Flappy GNOME - руководство по разработке игр с боковой прокруткой, использующее Vala и GTK +.
 

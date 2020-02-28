@@ -60,17 +60,7 @@
   * [Unit тестирование](techniques/unit-tests.md)
   * [Отладка](techniques/debug.md)
   * [Использование GLib](techniques/using-glib.md)
-* [Примеры](primery/README.md)
-  * [Базовые примеры](primery/bazovye-primery.md)
-* [GTK](gtk/README.md)
-  * [Flappy Bird\(???\)](gtk/flappy-bird.md)
-  * [Базовые GTK программы](gtk/bazovye-gtk-programmy.md)
-  * [DnD!](gtk/dnd.md)
 * [UPDATE.MD](update.md.md)
-
-## GLib
-
-* [Array](glib/array.md)
 
 ## Functional Programming
 
@@ -80,6 +70,10 @@
 ## Examples
 
 * [Basic](examples/basic.md)
+* [GTK](examples/gtk/README.md)
+  * [Flappy Bird\(???\)](examples/gtk/flappy-bird.md)
+  * [Базовые GTK программы](examples/gtk/bazovye-gtk-programmy.md)
+  * [DnD!](examples/gtk/dnd.md)
 
 ## Apps
 

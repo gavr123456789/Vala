@@ -43,7 +43,7 @@ $ valac --pkg gtk+-3.0 gtk-hello.vala
 $ ./gtk-hello
 ```
 
-![](../.gitbook/assets/image%20%286%29.png)
+![](../../.gitbook/assets/image%20%286%29.png)
 
 ### Настройка иконки приложения <a id="Setting_an_Application_Icon"></a>
 
@@ -107,7 +107,7 @@ public class SyncSample : Window {
 }
 ```
 
-![](../.gitbook/assets/gtk.gif)
+![](../../.gitbook/assets/gtk.gif)
 
 ### Панель инструментов, скроллинг текста и выбор файла <a id="Toolbar.2C_Scrollable_Text_View_and_File_Chooser"></a>
 
@@ -183,7 +183,7 @@ public class TextFileViewer : Window {
 }
 ```
 
-![](../.gitbook/assets/gtkfileview.gif)
+![](../../.gitbook/assets/gtkfileview.gif)
 
 Если вы хотите добавить дополнительные функции или изменить поведение диалога, вы можете _создать_ подкласс _FileChooserDialog_. Например этот запоминает последнюю папку:
 
@@ -320,13 +320,13 @@ int main (string[] args) {
 }
 ```
 
-![](../.gitbook/assets/dialog.gif)
+![](../../.gitbook/assets/dialog.gif)
 
 {% hint style="info" %}
 Своё кастомное диалоговое окно гораздо проще создать не из кода а из Glade
 {% endhint %}
 
-![](../.gitbook/assets/image%20%289%29.png)
+![](../../.gitbook/assets/image%20%289%29.png)
 
 ### Загрузка пользовательского интерфейса из файла XML <a id="Loading_User_Interface_from_XML_File"></a>
 
@@ -367,7 +367,7 @@ int main (string[] args) {
 }
 ```
 
-![](../.gitbook/assets/image%20%287%29.png)
+![](../../.gitbook/assets/image%20%287%29.png)
 
 ## Подключение сигналов
 
