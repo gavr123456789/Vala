@@ -64,3 +64,47 @@ t.first_data = 5;
 t.method_1();
 ```
 
+## Синглтон класс
+
+**Одиночка** \(Singleton\) — [порождающий шаблон проектирования](https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D1%80%D0%BE%D0%B6%D0%B4%D0%B0%D1%8E%D1%89%D0%B8%D0%B5_%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D1%8B_%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F), гарантирующий, что в однопоточном приложении будет единственный экземпляр некоторого класса, и предоставляющий глобальную точку доступа к этому экземпляру.
+
+{% hint style="info" %}
+То есть на русском — при каждом создании экземпляра такого класса из любой точки программы, вы будете получать один и тот же экземпляр. 
+{% endhint %}
+
+### Стандартная реализация\(не зависит от ЯП\)
+
+```csharp
+public class President : Object {
+    // Инстанс класса статический
+    static President? instance;
+ 
+    // Привытный конструктор
+    private President () {
+    }
+
+    // Публичный конструктор
+    public static President get_instance () {
+        if (instance == null) {
+            instance = new President ();
+        }
+        return instance;
+    }
+
+    // Нет методов кланирования и сереализации
+}
+```
+
+### Vala way
+
+Имеется атрибут который сделает всю работу за вас.
+
+```csharp
+[SingleInstance]
+public class ExampleClass : Object {
+    public ExampleClass (){
+        
+    }
+}
+```
+
