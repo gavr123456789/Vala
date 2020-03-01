@@ -326,7 +326,7 @@ int main (string[] args) {
 Своё кастомное диалоговое окно гораздо проще создать не из кода а из Glade
 {% endhint %}
 
-![](../../.gitbook/assets/image%20%289%29.png)
+![](../../.gitbook/assets/image%20%2810%29.png)
 
 ### Загрузка пользовательского интерфейса из файла XML <a id="Loading_User_Interface_from_XML_File"></a>
 

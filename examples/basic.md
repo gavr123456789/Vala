@@ -218,29 +218,42 @@ On the 11th line, you can see the creation of a class with some arguments specif
 На 11той строке вы можете увидеть создание класса с заданием некоторых аргументов без конструктора. Это похоже на именованные аргументы функций.
 {% endhint %}
 
-GObject Constructor Class
+GObject Constructor Class 
+
+
 
 ```csharp
-public class Person : Object {
-    /* Construction properties */
-    public string name { get; construct; }
-    public int age { get; construct set; }
-    public Person(string name) {
-        Object(name: name);
+using Gtk;
+class SpecialBtn : Button {
+    construct{
+        label = "Thats btn!";
+        clicked.connect(on_btn_clicked);
     }
-    public Person.with_age(string name, int years) {
-        Object(name: name, age: years);
-    }
-    construct {
-        // do anything else
-        stdout.printf(@"Welcome $name\n");
+    void on_btn_clicked(){
+        print("Button clicked test!");
     }
 }
-void main () {
-    var klass1 = new Person("Mark");//output: Welcome Mark
-    var klass2 = new Person.with_age("Mark",20);//output: Welcome Mark
+class HelloWorld : Window {
+    construct{
+        title = "Hello World Window";
+        window_position = WindowPosition.CENTER;
+        default_width = 200;
+        default_height = 300;
+        resizable = false;
+        add(new SpecialBtn());
+        show_all();
+        destroy.connect(Gtk.main_quit);//close btn -> close app
+    }
 }
+
+void main(string[] args) {
+    init(ref args);
+    var app = new HelloWorld();
+    Gtk.main();
+}// run: $ vala filename --pkg gtk+-3.0
 ```
+
+### 
 
 ### Structs
 
@@ -435,7 +448,7 @@ Sum using divide and conquer:
 ```csharp
 using Gpseq;
 void main () {
-    int[] array = {3, 1, 4, 1, 5, 9};
+    int[] array = {1, 2, 3, 4, 5, 6};
     Channel<int> chan = Channel.bounded<int>(0);
     run(() => sum(array[0:array.length/2], chan));
     run(() => sum(array[array.length/2:array.length], chan));
@@ -449,8 +462,8 @@ void sum (int[] arr, Sender<int> ch) {
 void print_sum (Receiver<int> ch) {
     int left = ch.recv().value;
     int right = ch.recv().value;
-    print("%d %d %d\n", left, right, left + right);
-}//result = 8 15 23
+    print(@"$left $right $(left + right)\n");
+}//result = left: 6(1+2+3) right: 15 left+right: 21
 ```
 
 ### GoLang like Managed Blocked Parallelism
@@ -502,6 +515,8 @@ public class GTypeKlassExample{
 public class FastestKlassExample {
 }
 ```
+
+![Benchmark for creating and deleting 100K classes of three types](../.gitbook/assets/image%20%289%29.png)
 
 ### Run-Time Type Information
 
