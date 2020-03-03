@@ -218,9 +218,7 @@ On the 11th line, you can see the creation of a class with some arguments specif
 На 11той строке вы можете увидеть создание класса с заданием некоторых аргументов без конструктора. Это похоже на именованные аргументы функций.
 {% endhint %}
 
-GObject Constructor Class 
-
-
+### GObject Constructor Class 
 
 ```csharp
 using Gtk;
@@ -253,12 +251,12 @@ void main(string[] args) {
 }// run: $ vala filename --pkg gtk+-3.0
 ```
 
-### 
-
 ### Structs
 
+{% hint style="info" %}
 Структуры выделяются на стеке  
 Memory for structs is allocated on the Stack.
+{% endhint %}
 
 ```csharp
 struct Klass{
