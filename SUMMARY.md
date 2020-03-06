@@ -73,7 +73,7 @@
   * [Flappy Bird\(???\)](examples/gtk/flappy-bird.md)
   * [Базовые GTK программы](examples/gtk/bazovye-gtk-programmy.md)
   * [DnD!](examples/gtk/dnd.md)
-* [Client Server](examples/client-server.md)
+* [Websocket](examples/websocket.md)
 
 ## Apps
 

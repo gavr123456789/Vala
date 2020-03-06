@@ -1,4 +1,4 @@
-# Client Server
+# Websocket
 
 {% hint style="info" %}
 Оригинал статьи\(wiki репы\) и репозиторий с кодом находятся [здесь](https://gitlab.gnome.org/MrSyabro/soup_websocket_Example).
