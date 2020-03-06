@@ -47,7 +47,7 @@ var message = new Soup.Message("GET", "http://<server_host>[:server_port]/[path]
 var loop = new MainLoop();
 ```
 
-> Вопросы? Поидее должны отсутствовать..![:thinking:](/assets/emoji/thinking-4f0b84e5ab8a650cafb166e93688f0e9b31b9ade22a91035261ac90490edb9d3.png)️
+> Вопросы? Поидее должны отсутствовать..️
 
 Получаем экземпляр `Soup.WebsocketConnection`:
 
