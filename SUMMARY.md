@@ -1,6 +1,7 @@
 # Table of contents
 
 * [Учебник Vala](README.md)
+* [For Big Boys](for-big-boys.md)
 * [Основы](untitled.md)
 * [Типы данных](tipy-dannykh.md)
 * [Управляющие структуры](upravlyayushie-struktury.md)

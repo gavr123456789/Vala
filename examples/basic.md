@@ -514,7 +514,7 @@ public class FastestKlassExample {
 }
 ```
 
-![Benchmark for creating and deleting 100K classes of three types](../.gitbook/assets/image%20%289%29.png)
+![Benchmark for creating and deleting 100K classes of three types](../.gitbook/assets/image%20%2810%29.png)
 
 ### Run-Time Type Information
 
