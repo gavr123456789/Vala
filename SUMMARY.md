@@ -88,4 +88,5 @@
 ## golang-book
 
 * [Ваша первая программа](golang-book/vasha-pervaya-programma.md)
+* [Типы](golang-book/tipy.md)
 
