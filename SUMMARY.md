@@ -85,3 +85,7 @@
 
 * [Change Log](meson-1/change-log.md)
 
+## golang-book
+
+* [Ваша первая программа](golang-book/vasha-pervaya-programma.md)
+
