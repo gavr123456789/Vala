@@ -14,7 +14,7 @@
 
 имеют зависимые от архитектуры выходные данные.
 
-```text
+```python
 pkgg.generate(
   name : 'libhello_nolib',
   description : 'A minimalistic pkgconfig file.',
