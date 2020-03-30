@@ -83,7 +83,8 @@
 
 ## Meson <a id="meson-1"></a>
 
-* [Change Log](meson-1/change-log.md)
+* [Meson 0.53](meson-1/meson-0.53.md)
+* [Meson 0.54](meson-1/meson-0.54.md)
 
 ## golang-book
 
