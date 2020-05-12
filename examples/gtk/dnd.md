@@ -1,4 +1,4 @@
-# DnD!
+# DnD
 
 Тут разбор вот [этого](https://gitlab.com/doublehourglass/dnd_order_list_box) кастомного виджета 
 
