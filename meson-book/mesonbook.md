@@ -308,7 +308,7 @@ endian = 'little'
 {% tab title="Cuda" %}
 ```cpp
 project('simple', 'cuda', version : '1.0.0')
-exe = executable('prog', 'prog.cu')
+executable('prog', 'prog.cu')
 ```
 {% endtab %}
 
@@ -326,22 +326,68 @@ is.project('spin',
 {% endtab %}
 {% endtabs %}
 
-Даже не уверен стоит ли тут что-то пояснять, в этом вся суть Meson. Нудаладна, project, с этой строчки начинается любой проект, первый аргумент название проекта, далее идет перечисление языков которые используются в проекте\(далее будет рассмотрен такой пример\)
+Даже не уверен стоит ли тут что-то пояснять, в этом вся суть Meson. 
 
-executable является таргетом этого билд скрипта, в одном билдскрипте их может быть сколько угодно. Первый аргумент название, второй список файлов. 
+#### project
 
-#### Несколько файлов
+C этой строчки начинается любой проект, первый аргумент название проекта а затем перечисление языков которые используются в проекте \(Например так как Vala компилируется в C для нее перечислены оба языка\)
 
-```csharp
-project('simple', 'c')
-src = ['source1.c', 'source2.c', 'source3.c']
-executable('myexe', src)
+#### executable
+
+executable это цель этого билд скрипта, в одном билдскрипте их может быть сколько угодно. Первый аргумент название, второй список файлов. 
+
+#### Build
+
+Это всё, теперь мы готовы забилдить наше приложение. Сначала нам нужно инициализировать сборку, перейдя в исходный каталог и выполнив:  
+`meson build` 
+
+Мы создаем отдельный каталог сборки, чтобы содержать весь вывод компилятора. Meson отличается от некоторых других систем сборки тем, что он не допускает in-source builds. Вы всегда должны создать отдельный каталог сборки. Общепринятой нормой считается размещение build каталога в корневой директории вашего проекта.
+
+```cpp
+❯ meson build
+The Meson build system
+Version: 0.54.1
+Source dir: /home/gavr/Dev/Meson
+Build dir: /home/gavr/Dev/Meson/build
+Build type: native build
+Project name: simple
+Project version: undefined
+C compiler for the host machine: cc (gcc 9.3.0 "cc (Arch Linux 9.3.0-1) 9.3.0")
+C linker for the host machine: cc ld.bfd 2.34
+Vala compiler for the host machine: valac (valac 0.48.5)
+Host machine cpu family: x86_64
+Host machine cpu: x86_64
+Found pkg-config: /usr/bin/pkg-config (1.6.3)
+Run-time dependency glib-2.0 found: YES 2.64.2
+Build targets in project: 1
+
+Found ninja-1.10.0 at /usr/bin/ninja
 ```
+
+ninja -C build
+
+Meson использует ninja в качестве бэкенда. 
+
+> **Ninja** - это небольшая система сборки с акцентом на скорость. Она отличается от других систем сборки в двух основных аспектах: она предназначен для того, чтобы её входные файлы создавались системой сборки более высокого уровня, и она предназначен для запуска сборок с максимальной скоростью.
+>
+> По сути, Ninja предназначена для замены Make, которая медлителен при выполнении инкрементных \(или no-op\) сборок. Это может значительно замедлить работу разработчиков над большими проектами, такими как Google Chrome, который компилирует 40 000 входных файлов в один исполняемый файл. На самом деле Google Chrome - это основной пользователь и мотивация для создания ninja. Она также используется для сборки Android и большинством разработчиков, работающих над LLVM.
+
+```cpp
+❯ ninja -C build
+ninja: Entering directory `build'
+[3/3] Linking target myexe
+```
+
+{% hint style="info" %}
+Флаг -C указывает название директории, аналогично cd build && ninja
+{% endhint %}
+
+### Несколько файлов
 
 {% tabs %}
 {% tab title="C" %}
 ```cpp
-project('simple', 'c')
+project('manyfiles', 'c')
 src = ['source1.c', 'source2.c', 'source3.c']
 executable('myexe', src)
 ```
@@ -349,8 +395,9 @@ executable('myexe', src)
 
 {% tab title="Vala" %}
 ```csharp
-project('valatest', 'vala', 'c')
-executable('valaprog', 'prog.vala', dependency('glib-2.0'))
+project('manyfiles', 'vala', 'c')
+src = ['source1.vala', 'source2.vala', 'source3.vala']
+executable('myexe', src,  dependencies: dependency('glib-2.0'))
 ```
 {% endtab %}
 {% endtabs %}
@@ -360,10 +407,10 @@ src является переменной, которая содержит ма�
 Аргументы могут быть именованными, чаще всего люди используют их именно так
 
 ```cpp
-executable('myexe', sources : src)
+exe = executable('myexe', sources : src, dependencies: deps)
 ```
 
-#### Тесты
+### Тесты
 
 ```cpp
 test('simple test', exe)
@@ -371,5 +418,96 @@ test('simple test', exe)
 
 Первый аргумент название теста, второй executable target.
 
+Команда `ninja -C build test` запустит все тесты проекта
 
+{% hint style="info" %}
+Meson не заставляет использовать какой-либо конкретный тест-фреймворк. Вы можете свободно использовать GTest\(GLib\), Boost Test, Check или даже пользовательские исполняемые файлы.
+{% endhint %}
+
+### Зависимости
+
+В качестве примера мы будем использовать зависимость Gtk, так как она доступна для большинства языков. 
+
+#### source
+
+{% tabs %}
+{% tab title="С" %}
+```cpp
+#include<gtk/gtk.h>
+
+int main(int argc, char **argv) {
+  GtkWidget *win;
+  gtk_init(&argc, &argv);
+  win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_title(GTK_WINDOW(win), "Hello there");
+  g_signal_connect(win, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+  gtk_widget_show(win);
+  gtk_main();                            //run gtk main loop
+}
+```
+{% endtab %}
+
+{% tab title="Vala" %}
+```cpp
+using Gtk;
+ 
+void main(string[] args){
+    Gtk.init(ref args);
+    var window = new Window(){ title = "Hello, World!"}; //same as window.title
+    window.destroy.connect(Gtk.main_quit); //native lang signals
+    window.show_all();
+    Gtk.main();                            //run gtk main loop
+}
+```
+{% endtab %}
+
+{% tab title="D" %}
+```d
+import std.stdio;
+
+import gtk.MainWindow;
+import gtk.Main;
+import gtk.Widget;
+
+void main(string[] args){
+	Main.init(args);
+	auto window = new MainWindow("Hello, World!");
+	window.addOnDestroy(delegate void(Widget w) { Main.quit();});
+	window.showAll();
+	Main.run();
+}
+```
+{% endtab %}
+{% endtabs %}
+
+#### meson.build
+
+{% tabs %}
+{% tab title="C" %}
+```cpp
+project('gtkapp', 'c')
+src = ['app.c']
+gtk = dependency('gtk+-3.0')
+executable('demo', 'app.c', dependencies : gtk)
+```
+{% endtab %}
+
+{% tab title="Vala" %}
+```cpp
+project('gtkapp', 'vala', 'c')
+src = ['app.vala']
+gtk = dependency('gtk+-3.0')
+executable('demo', src, dependencies: gtk)
+```
+{% endtab %}
+
+{% tab title="D" %}
+```csharp
+project('gtkapp', 'd')
+src = ['app.d']
+gtkd = dependency ('gtkd-3')
+executable('myexe', src,  dependencies: gtkd)
+```
+{% endtab %}
+{% endtabs %}
 
