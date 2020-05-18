@@ -117,7 +117,7 @@ int main(void) {
 {% endtab %}
 
 {% tab title=".cu" %}
-```
+```cpp
 #include <iostream>
 
 int main(void) {
@@ -426,7 +426,7 @@ Meson не заставляет использовать какой-либо к�
 
 ### Зависимости
 
-В качестве примера мы будем использовать зависимость Gtk, так как она доступна для большинства языков. 
+Просто выводить текст в консоль слишком скучно, переключаемся на GTK. 
 
 #### source
 
@@ -439,7 +439,7 @@ int main(int argc, char **argv) {
   GtkWidget *win;
   gtk_init(&argc, &argv);
   win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(win), "Hello there");
+  gtk_window_set_tiну tle(GTK_WINDOW(win), "Hello from C!");
   g_signal_connect(win, "destroy", G_CALLBACK(gtk_main_quit), NULL);
   gtk_widget_show(win);
   gtk_main();                            //run gtk main loop
@@ -453,10 +453,10 @@ using Gtk;
  
 void main(string[] args){
     Gtk.init(ref args);
-    var window = new Window(){ title = "Hello, World!"}; //same as window.title
-    window.destroy.connect(Gtk.main_quit); //native lang signals
+    var window = new Window(){ title = "Hello from Vala!"}; 
+    window.destroy.connect(Gtk.main_quit); 
     window.show_all();
-    Gtk.main();                            //run gtk main loop
+    Gtk.main();                            
 }
 ```
 {% endtab %}
@@ -471,7 +471,7 @@ import gtk.Widget;
 
 void main(string[] args){
 	Main.init(args);
-	auto window = new MainWindow("Hello, World!");
+	auto window = new MainWindow("Hello from D!");
 	window.addOnDestroy(delegate void(Widget w) { Main.quit();});
 	window.showAll();
 	Main.run();
@@ -488,7 +488,8 @@ void main(string[] args){
 project('gtkapp', 'c')
 src = ['app.c']
 gtk = dependency('gtk+-3.0')
-executable('demo', 'app.c', dependencies : gtk)
+exe = executable('demo', 'app.c', dependencies : gtk)
+test('test', exe)
 ```
 {% endtab %}
 
@@ -497,7 +498,8 @@ executable('demo', 'app.c', dependencies : gtk)
 project('gtkapp', 'vala', 'c')
 src = ['app.vala']
 gtk = dependency('gtk+-3.0')
-executable('demo', src, dependencies: gtk)
+exe = executable('demo', src, dependencies: gtk)
+test('test', exe)
 ```
 {% endtab %}
 
@@ -506,8 +508,19 @@ executable('demo', src, dependencies: gtk)
 project('gtkapp', 'd')
 src = ['app.d']
 gtkd = dependency ('gtkd-3')
-executable('myexe', src,  dependencies: gtkd)
+exe = executable('myexe', src,  dependencies: gtkd)
+test('test', exe)
 ```
 {% endtab %}
 {% endtabs %}
+
+Объяснять буквально нечего, dependencies работают также как sources.
+
+{% hint style="info" %}
+После того как вы настроили свой каталог сборки в первый раз, вам больше никогда не нужно будет запускать команду meson. Meson автоматически определит, когда вы внесли изменения в определения сборки, и позаботится обо всем, чтобы пользователям не пришлось беспокоиться.
+{% endhint %}
+
+![](../.gitbook/assets/image%20%2818%29.png)
+
+
 
