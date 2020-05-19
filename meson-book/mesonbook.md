@@ -1,8 +1,8 @@
 # MesonBook
 
+{% hint style="info" %}
 Советую посмотреть вот эту презентацию чтобы лучше понимать зачем стоит использовать Meson. [https://youtu.be/SCZLnopmYBM](https://youtu.be/SCZLnopmYBM)
-
-Вот список каких то фич:
+{% endhint %}
 
 ### Features <a id="features"></a>
 
