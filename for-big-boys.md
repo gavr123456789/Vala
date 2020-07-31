@@ -3,6 +3,240 @@
 Я решил создать этот раздел для тех кто уже хорошо знаком с основными понятиями программирования вроде ООП, лямбд, делегатов и тд. Здесь будут описаны только ключевые особенности Vala в отличии от других языком.  
 
 
+## Структуры
+
+Структуры как и в C\# являются value типами, выделяются на стеке и копируются при передачи или присваивании.   
+Все поля структуры являются публичными.  
+В структурах могут быть методы.  
+Структуры можно наследовать.
+
+Для структуры
+
+```csharp
+struct Foo{
+	int a;
+	bool b;
+	string c;
+}
+```
+
+Сгенерируются методы:
+
+```c
+GType foo_get_type (void) G_GNUC_CONST;
+Foo* foo_dup (const Foo* self);
+void foo_free (Foo* self);
+void foo_copy (const Foo* self,
+               Foo* dest);
+void foo_destroy (Foo* self);
+```
+
+#### Copy и Dup
+
+copy принимает 2 указателя на структуры, и копирует все поля первой во вторую, dup принимает существующий Foo, создает новый, вызывает для переданного и нового copy, возвращает получившуюся копию.
+
+```c
+Foo*
+foo_dup (const Foo* self)
+{
+	Foo* dup;
+	dup = g_new0 (Foo, 1); // выделение памяти инициализированной нулями
+	foo_copy (self, dup);
+	return dup;
+}
+```
+
+
+
+```c
+void
+foo_copy (const Foo* self,
+          Foo* dest)
+{
+	const gchar* _tmp0_;
+	gchar* _tmp1_;
+	(*dest).a = (*self).a;
+	(*dest).b = (*self).b;
+	_tmp0_ = (*self).c;
+	_tmp1_ = g_strdup (_tmp0_);
+	_g_free0 ((*dest).c);
+	(*dest).c = _tmp1_;
+}
+```
+
+#### Free и Destroy
+
+destroy освобождает все поля структуры для которых это требуется\(в данном случае только `string c`\)
+
+```c
+#define _g_free0(var) (var = (g_free (var), NULL))
+
+void
+foo_destroy (Foo* self)
+{
+	_g_free0 ((*self).c);
+}
+```
+
+Free вызывает destroy, а затем освобождает саму структуру
+
+```c
+void
+foo_free (Foo* self)
+{
+	foo_destroy (self);
+	g_free (self);
+}
+```
+
+Рассмотрим что тут происходит
+
+```csharp
+void main(string[] args) {
+	Foo foo = {5, false, "foo"};
+}
+
+//превращается в
+typedef struct _Foo Foo;
+struct _Foo {
+	gint a;
+	gboolean b;
+	gchar* c;
+};
+
+{
+	Foo foo = {0}; // структура на стеке проинициализированная нулями
+	gchar* _tmp0_; // будущая строка
+	Foo _tmp1_ = {0}; // еще раз (соптимизируется)
+	_tmp0_ = g_strdup ("foo"); // заполняется строка
+	_tmp1_.a = 5;
+	_tmp1_.b = FALSE; // заполняется переменными на стеке лишняя структура
+	_g_free0 (_tmp1_.c); // очистка с от возможного мусора 
+	_tmp1_.c = _tmp0_; // присваивание в c строки
+	foo = _tmp1_; // присванивание в настоящую структуру временной
+	foo_destroy (&foo); // вызов деструктора который очистит строку
+}
+```
+
+Строка тут единственное что будет выделено в куче, поэтому ей нужна очистка.
+
+Вариант в котором все будет лежать на стеке\(функция destroy нигде не вызывается\):
+
+```cpp
+struct Foo{
+	int a;
+	bool b;
+	uint8 c[3];
+}
+
+void main(string[] args) {
+	Foo foo = {5, false, "foo".data}; // data возвращает массив uint8[]
+}
+```
+
+### Боксинг
+
+Так как структуры передаются по значению, то есть копируются, если мы хотим изменить значение одного из полей в методе, структуру придется забоксить, то есть превратить в указатель, делается это через nullability
+
+```csharp
+void bar (Foo? foo){
+	foo.a = 4;
+}
+
+void main(string[] args) {
+	Foo foo = {5, false, "foo".data};
+	bar(foo);
+	print(foo.a.to_string()); // 4
+}
+```
+
+Структура честно принимается и передается по указателю:
+
+```c
+void
+bar (Foo* foo)
+{
+	(*foo).a = 4;
+}
+...
+  _tmp4_ = foo;
+	bar (&_tmp4_);
+```
+
+### Конструкторы
+
+У структур в Vala есть конструкторы \(и обычные методы разумеется\).
+
+```csharp
+struct Foo{
+	int a;
+	bool b;
+	Foo(int a, bool b){ this.a = a; this.b = b; }
+}
+
+void main(string[] args) {
+	var foo = Foo(5, false); 
+}
+
+// На стороне С
+static void
+foo_init (Foo *self,
+          gint a,
+          gboolean b)
+{
+	memset (self, 0, sizeof (Foo));
+	(*self).a = a;
+	(*self).b = b;
+}
+
+{
+	Foo foo = {0};
+	foo_init (&foo, 5, FALSE);
+}
+```
+
+### Наследование
+
+Структуры можно наследовать, но в наследниках можно добавлять только методы, так как структуры выделены на стеке и новой памяти в них не добавить.
+
+```csharp
+struct Foo{
+	int a;
+	public void bar(string str) { print(str + "\n");}
+}
+
+struct Bar: Foo{
+	public void foo(int a) { print(@"$(a + 1 + base.a)\n"); } // 41 + 1 + 1
+}
+
+void main(string[] args) {
+	Bar bar = {1};
+	bar.bar("foo"); // foo из Foo.bar()
+	bar.foo(41); // 43
+}
+```
+
+base означает родитель, на 7ой строке base.a = 1, было присвоено на 11.
+
+Можно наследоваться от любых value типов, в том числе базовых типов.
+
+```csharp
+struct Foo: uint64{
+	public void print_value() { print(@"$this\n");}
+}
+
+void main(string[] args) {
+	Foo apple = 20;
+	Foo orange = 22;
+	apple.print_value(); //20
+	orange.print_value();//22
+	var a = apple + orange;
+	print(@"$a\n"); // 42
+}
+```
+
+## Все что ниже не готово\(WIP\)
+
 ## Оссобенности синтаксиса
 
 ?? null-сливающий оператор: a ?? b  эквивалентно  a != null ? a : b. Этот оператор особенно полезен, например, для предоставление дефолтного значения в том случае, если ссылка равна _null_:
