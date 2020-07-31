@@ -221,6 +221,10 @@ base означает родитель, на 7ой строке base.a = 1, бы
 
 Можно наследоваться от любых value типов, в том числе базовых типов.
 
+{% hint style="info" %}
+псс, парень, [все базовые типы и так структуры](https://gitlab.gnome.org/GNOME/vala/-/blob/master/vapi/glib-2.0.vapi#L116)
+{% endhint %}
+
 ```csharp
 struct Foo: uint64{
 	public void print_value() { print(@"$this\n");}
