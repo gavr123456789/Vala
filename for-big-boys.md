@@ -126,7 +126,8 @@ struct _Foo {
 struct Foo{
 	int a;
 	bool b;
-	uint8 c[3];
+	uint8 c[3]; // [] cи стайл = на стеке, c# стайл = на куче
+	// int[] a; на куче, int a[5] на стеке
 }
 
 void main(string[] args) {
