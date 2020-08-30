@@ -35,7 +35,7 @@
   * [Методы с поддержкой синтаксиса](advanced-features/methods-with-syntax-support.md)
   * [Многопоточность](advanced-features/multithreading.md)
   * [Главный цикл\(The Main Loop\)](advanced-features/main-loop.md)
-  * [Асинхронные методы\(Coroutine\)](advanced-features/coroutine.md)
+  * [Асинхронные методы](advanced-features/coroutine.md)
   * [Слабые ссылки\(Weak References\)](advanced-features/weak-references.md)
   * [Список аргументов переменной длины](advanced-features/variable-length-arguments.md)
   * [Указатели](advanced-features/pointers.md)

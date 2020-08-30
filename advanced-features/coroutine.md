@@ -1,4 +1,4 @@
-# Асинхронные методы\(Coroutine\)
+# Асинхронные методы
 
 Асинхронные методы позволяют программировать вообще без блокировок. Начиная с версии 0.7.6 Vala предоставляет специальный синтаксис для асинхронного программирования.
 
@@ -31,9 +31,9 @@
   }
 ```
 
-The method may take arguments and return a value like any other method. It may use a yield statement at any time to give control of the CPU back to its caller.
+Метод может принимать аргументы и возвращать значение, как и любой другой метод. Он может использовать оператор yield в любое время, чтобы вернуть контроль над процессором своему вызывающему объекту.
 
-An async method may be called with either of these two forms:
+Асинхронный метод может быть вызван с любой из этих двух форм:
 
 ```csharp
   display_jpeg.begin("test.jpg");
@@ -67,15 +67,46 @@ return a_result_of_some_type;
 
 После yield может быть возвращен результат. Явно это выполняется в AsyncResult в методе обратного вызова. .callback во многом похож на концепцию пролонгации в определенных языках программирования \(напр. Scheme\), за исключением того, что в Vala он немедленно предоставляет контекст следующий за ближайшим выражением yield.
 
-`end()` служит синтаксисом для метода `*_finish`. Он берет `AsyncResult` и возвращает действительный результат или кидает ошибку \(если это делает асинхронный метод\). Он вызывается как:
-
-```csharp
-async_method.end(result)
-```
-
-в асинхронном обратном вызове.
+`end()` служит синт сахаром для метода `*_finish`. Он берет `AsyncResult` и возвращает действительный результат или кидает ошибку \(если это делает асинхронный метод\). Он вызывается как: `async_method.end(result)`в асинхронном обратном вызове.
 
 **Examples**
 
 See [Async Method Samples](https://wiki.gnome.org/Projects/Vala/AsyncSamples) for examples of different ways that async may be used.
+
+```csharp
+using Gtk;
+
+using Gtk;
+Button button;
+
+public static int main (string[] args) {
+    Gtk.init (ref args);
+
+    var window = new Window ();
+    window.title = "Count without blocking the UI";
+    window.border_width = 10;
+    window.window_position = WindowPosition.CENTER;
+    window.set_default_size (350, 70);
+    window.destroy.connect (Gtk.main_quit);
+    button = new Button.with_label ("Start counting");
+    button.clicked.connect (() => {
+        count.begin();
+    });
+
+    window.add (button);
+    window.show_all ();
+
+    Gtk.main ();
+
+    return 0;
+}
+
+async void count(){
+    for(int i = 0; i < 10000; i++){
+        button.label = i.to_string();
+        Idle.add (count.callback);
+        yield;
+    }
+}
+```
 
