@@ -27,6 +27,8 @@
 * Библиотека GTK
 * ...
 
+Остальные статьи будут маленькими.
+
 ### Hello World
 
 ```text
@@ -58,7 +60,7 @@ init
     print "Hello World!"
 ```
 
-Не пугайтесь, в последнем примере используется альтернативный синтаксис, о нем будет позже, в одном файле их совместить не получится.
+В последнем примере используется альтернативный синтаксис, похожий на Python.
 
 ### Компилятор
 
@@ -75,6 +77,8 @@ Vala является [транспайлером](https://ru.wikipedia.org/wiki
 Пробросить флаг `O3` в C компилятор: `valac filename -X -O3`
 
 Скомпилировать используя только libc\(многие фичи будут недоступны\): `valac filename --profile=posix`
+
+Скомпилировать с помощью вашего C компилятора: `valac filename --cc=tcc`
 
 ## Синтаксис
 
@@ -375,17 +379,44 @@ Compact класс с копированием
 
 ### Linux
 
-Arch
+Arch: `yay -S vala`
 
-Ubuntu
+Fedora: `sudo dnf install vala`
+
+CentOS: `sudo yum install vala`
+
+Debian: `sudo apt install valac`
+
+Для старых deb подобных дистрибутивов есть [vala-next](https://launchpad.net/~vala-team/+archive/ubuntu/next) репа где публикуются последние версии.
 
 ### Windows
 
-MSYS2
+MSYS2:
+
+```text
+pacman -S mingw-w64-x86_64-gcc 
+pacman -S mingw-w64-x86_64-pkg-config
+pacman -S mingw-w64-x86_64-vala
+```
 
 ### Mac
 
+`brew install vala`
+
+### Android 
+
+Termux: `pkg install vala`
+
+### \*BSD
+
+```text
+cd /usr/ports/lang/vala/ && make install clean
+pkg install vala
+```
+
 ## Инструменты
+
+
 
 ## Компании которые используют
 
