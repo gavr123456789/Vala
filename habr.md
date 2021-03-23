@@ -16,7 +16,7 @@
 
 ... Спустя 40 минут после начала написания статьи я понял что статей будет несколько, конкретно эта будет обзорной, а вот полный список:
 
-* Основы
+* Основы &lt;- вы здесь
 * Системы типов
 * Управление памятью
 * C Interop
@@ -84,7 +84,7 @@ Vala является [транспайлером](https://ru.wikipedia.org/wiki
 
 Стилистика нейминга однако отличается, могу придумать 2 причины:
 
-1. Совместимость с C где чаще используется sname\_case
+1. Совместимость с C где чаще используется snake\_case
 2. Использование различных \*case для улучшения читабельности
 
 C\#
@@ -143,17 +143,105 @@ Switch работает со строками и проверяет наличи
 
 Не вижу особого смысла перечислять базовые типы, но вроде как сложилась традиция.
 
-Value: bool, char, double, float, int, int16, int32, int64, int8, intptr, long, short, size\_t, ssize\_t, time\_t , uchar, uint, uint16, uint32, uint64, uint8, uintptr, ulong, unichar, unichar2, ushort, va\_list
+Struct: bool, char, double, float, int, int16, int32, int64, int8, intptr, long, short, size\_t, ssize\_t, time\_t , uchar, uint, uint16, uint32, uint64, uint8, uintptr, ulong, unichar, unichar2, ushort, va\_list
 
-Reference:
+Class:
 
-* string — cstring
+* string — cstring\(UTF-8\)
 * string16 — UTF-16
 * string32 — Тип, который может содержать любой UTF-32 или UCS-4 символ, также известнен как Unicode code point
 
 Стандартный тип string является cstring для совместимости, для активной конкатенации есть тип StringBuilder.
 
 
+
+### Структуры
+
+Здесь будет объяснение почему в предыдущем разделе были использованы слова Struct и Class вместо Value type, Reference Type
+
+Дело в том что все типы в vala это биндинги к типам GLib. Это не значит что используя int мы имеем какой то overhead:
+
+![](.gitbook/assets/izobrazhenie%20%284%29.png)
+
+![](.gitbook/assets/izobrazhenie%20%283%29.png)
+
+В vala очень продвинутая система биндингов к C коду, можно сказать vala на половину из нее состоит. 
+
+
+
+Тогда откуда тогда у взялись int методы?
+
+![](.gitbook/assets/izobrazhenie%20%281%29.png)
+
+Вот отсюда:
+
+```text
+//glib-2.0.vapi
+[SimpleType]
+[GIR (name = "gint")]
+[CCode (cname = "gint", cheader_filename = "glib.h", type_id = "G_TYPE_INT", marshaller_type_name = "INT", get_value_function = "g_value_get_int", set_value_function = "g_value_set_int", default_value = "0", default_value_on_error = "-1", type_signature = "i")]
+[IntegerType (rank = 6)]
+public struct int {
+	[CCode (cname = "G_MININT")]
+	public const int MIN;
+	[CCode (cname = "G_MAXINT")]
+	public const int MAX;
+
+	[CCode (cname = "g_strdup_printf", instance_pos = -1)]
+	public string to_string (string format = "%i");
+
+	[CCode (cname = "MIN")]
+	public static int min (int a, int b);
+	[CCode (cname = "MAX")]
+	public static int max (int a, int b);
+	[CCode (cname = "CLAMP")]
+	public int clamp (int low, int high);
+
+	[CCode (cname = "GINT_TO_POINTER")]
+	public void* to_pointer ();
+	[CCode (cname = "GPOINTER_TO_INT")]
+	public static int from_pointer (void* p);
+
+	[CCode (cname = "abs", cheader_filename = "stdlib.h")]
+	public int abs ();
+
+	[CCode (cname = "GINT_TO_BE")]
+	public int to_big_endian ();
+	[CCode (cname = "GINT_TO_LE")]
+	public int to_little_endian ();
+
+	[CCode (cname = "GINT_FROM_BE")]
+	public static int from_big_endian (int val);
+	[CCode (cname = "GINT_FROM_LE")]
+	public static int from_little_endian (int val);
+
+	[CCode (cname = "atoi", cheader_filename = "stdlib.h")]
+	public static int parse (string str);
+
+	[CCode (cname = "strtol", cheader_filename = "stdlib.h")]
+	static long strtol (string nptr, out char* endptr, int _base);
+
+	public static bool try_parse (string str, out int result = null, out unowned string unparsed = null, uint _base = 0) {
+		char* endptr;
+		errno = 0;
+		long long_result = strtol (str, out endptr, (int) _base);
+		if (endptr == (char*) str + str.length) {
+			unparsed = "";
+		} else {
+			unparsed = (string) endptr;
+		}
+		if (int.MIN <= long_result <= int.MAX) {
+			result = (int) long_result;
+			return errno != ERANGE && errno != EINVAL && unparsed != endptr;
+		} else {
+			result = int.MAX;
+			return false;
+		}
+	}
+}
+```
+
+Все верно, даже базовые value типы на самом деле являются биндингами к типам GLib. То что тип содержит внутри себя функции это иллюзия из-за того что при биндинге их туда положили. Также здесь видно что некоторые функции отсутствующие в GLib пишут на месте\(`try_parse`\).
 
 
 
@@ -223,7 +311,7 @@ GLib classes: [AsyncQueue](https://valadoc.org/glib-2.0/GLib.AsyncQueue.html), [
 
 Также можно генерировать код без зависимостей,  тогда не будет классов, зато есть vapi для posix
 
-![](.gitbook/assets/izobrazhenie%20%281%29.png)
+![](.gitbook/assets/izobrazhenie%20%282%29.png)
 
 Есть PR на добавление compact классов. 
 
