@@ -68,6 +68,7 @@
   * [Отладка](techniques/debug.md)
   * [Использование GLib](techniques/using-glib.md)
 * [Продвинуты гайд\(WIP\)](for-big-boys.md)
+* [Habr](habr.md)
 
 ## Functional Programming
 
