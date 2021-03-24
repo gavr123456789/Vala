@@ -14,7 +14,7 @@
 
 А теперь о том что в языке есть:
 
-... Спустя 40 минут после начала написания статьи я понял что статей будет несколько, конкретно эта будет обзорной, а вот полный список:
+... Спустя 40 минут после начала написания статьи я понял что статей будет несколько, конкретно эта будет обзорной, а остальные короткие и конкретные
 
 * Основы &lt;- вы здесь
 * Системы типов
@@ -149,13 +149,58 @@ Switch работает со строками и проверяет наличи
 
 ### With
 
-; в Smalltalk
+В Vala поддерживается [Method cascading](https://en.wikipedia.org/wiki/Method_cascading)
 
-.. в Ruby
+Вы можете быть знакомы с этим по другим языкам
 
-with в visual basic
+`;` в Smalltalk
 
+`..` в Ruby, Dart
 
+`with` в visual basic
+
+Было добавлено в PR [https://gitlab.gnome.org/GNOME/vala/-/merge\_requests/117](https://gitlab.gnome.org/GNOME/vala/-/merge_requests/117)
+
+Синтаксис with был предпочтительным так как он будет близок к уже имеющимся стейтменту lock. 
+
+#### Как это работает
+
+```text
+struct Foo{
+    int a;
+
+    public void add(int i){
+        this.a += i;
+    }
+    public void mul(int i){
+        this.a *= i;
+    }
+    public void min(int i){
+        this.a -= i;
+    }
+    public void prin(){
+        print(@"$a\n");
+    }
+
+}
+
+void main(){
+    var foo = Foo();
+    with (foo){
+        add(5);
+        min(1);
+        add(2);
+        mul(7);
+        prin(); // 42
+    }
+}
+```
+
+Пример с UI
+
+```text
+
+```
 
 ### Операторы
 
@@ -175,11 +220,13 @@ Null оператор: `a ?? b` эквивалентно a != null ? a : b
 print("Hello, %s!\n", name ?? "unknown person");
 ```
 
-
+in проверяет на наличия элемента в коллекции
 
 
 
 in, ??, 
+
+Планируется добавить  .?
 
 
 
@@ -193,7 +240,7 @@ Class:
 
 * string — cstring\(UTF-8\)
 * string16 — UTF-16
-* string32 — Тип, который может содержать любой UTF-32 или UCS-4 символ, также известнен как Unicode code point
+* string32 — Тип, который может содержать любой UTF-32 или UCS-4 символ, также известен как Unicode code point
 
 Стандартный тип string является cstring для совместимости, для активной конкатенации есть тип StringBuilder.
 
@@ -201,7 +248,7 @@ Class:
 
 Присутствуют Value, Reference типы и Pure указатели для ручного контроля. 
 
-Планируется добавить  .?
+
 
 
 
@@ -356,6 +403,50 @@ GLib classes: [AsyncQueue](https://valadoc.org/glib-2.0/GLib.AsyncQueue.html), [
 
 
 ### Nullability
+
+## Кодогенерация
+
+C++
+
+```text
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+
+    int a = 1;
+    int b = ++a + a++;
+    cout << b << endl;
+
+    a = 1;
+    int c = a++ + ++a;
+    cout << c << endl;
+
+    return 0;
+}
+```
+
+Vala
+
+```text
+void main(){
+    int a = 1;
+    int b = ++a + a++;
+    prin(b);
+    
+    a = 1;
+    int c = a++ + ++a;
+    prin(c);
+}
+
+[Print] void prin(string str) { print(str + "\n"); }
+```
+
+
+
+
 
 ## GIR
 
