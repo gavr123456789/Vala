@@ -69,6 +69,7 @@
   * [Использование GLib](techniques/using-glib.md)
 * [Продвинуты гайд\(WIP\)](for-big-boys.md)
 * [Habr](habr.md)
+* [Примеры кода](code-examples.md)
 
 ## Functional Programming
 
